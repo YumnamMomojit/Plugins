@@ -1,0 +1,12 @@
+# Adds the TradingAgents tool. Change the models or endpoint here, or override this
+# row in your profile's cordis.patch.yml.
+- insert:
+    - id: semdok-tradingagents
+      name: semdok-tradingagents
+      config:
+        baseURL: https://console.semdok.com/v1
+        apiKeyEnv: SEMDOK_API_KEY
+        # Managers (research, risk, portfolio) use the deep model; the analysts,
+        # researchers, trader and risk debaters use the quick one.
+        deepModel: claude/claude-sonnet-4-5-20250929
+        quickModel: ddgw/gpt-5.4-mini

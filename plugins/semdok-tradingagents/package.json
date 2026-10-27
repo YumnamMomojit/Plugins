@@ -1,0 +1,16 @@
+{
+  "name": "semdok-tradingagents",
+  "version": "0.1.0",
+  "description": "Semdok Harness plugin: run the TradingAgents multi-agent stock research framework on your Semdok models",
+  "type": "module",
+  "main": "index.js",
+  "files": ["index.js", "cordis.patch.yml", "runner/ta_runner.py", "icon.svg", "README.md", "LICENSE", "NOTICE"],
+  "license": "MIT",
+  "keywords": ["semdok-harness", "dsh-plugin", "tradingagents", "finance", "stocks"],
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } },
+  "engines": { "dsh": ">=1.0.0 <2.0.0" },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "*",
+    "@deepseek-ai/dsh-home-paths": "*"
+  }
+}

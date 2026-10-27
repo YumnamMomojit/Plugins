@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b6b4f"/>
+      <stop offset="1" stop-color="#033226"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#c9922a"/>
+      <stop offset="1" stop-color="#f8de8e"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <g stroke="#6ee7b7" stroke-opacity=".35" stroke-width="2">
+    <line x1="22" y1="96" x2="106" y2="96"/>
+    <line x1="22" y1="74" x2="106" y2="74"/>
+    <line x1="22" y1="52" x2="106" y2="52"/>
+  </g>
+  <g fill="#10b981">
+    <rect x="28" y="70" width="10" height="26" rx="2"/>
+    <rect x="46" y="60" width="10" height="36" rx="2"/>
+    <rect x="64" y="66" width="10" height="30" rx="2"/>
+    <rect x="82" y="48" width="10" height="48" rx="2"/>
+  </g>
+  <polyline points="24,82 44,62 62,70 90,36" fill="none" stroke="url(#gold)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#f8de8e" stroke="#033226" stroke-width="3">
+    <circle cx="44" cy="62" r="7"/>
+    <circle cx="62" cy="70" r="7"/>
+    <circle cx="90" cy="36" r="9"/>
+  </g>
+  <path d="M104 18 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#f8de8e"/>
+</svg>

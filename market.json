@@ -1,0 +1,11 @@
+{
+  "title": { "en": "Semdok Plugins" },
+  "description": { "en": "Plugins for Semdok Harness, made by Semdok." },
+  "plugins": {
+    "semdok-tradingagents": {
+      "title": { "en": "TradingAgents" },
+      "description": { "en": "Multi-agent stock and crypto research (TradingAgents by Tauric Research) on your Semdok models. Research only, not financial advice." },
+      "author": "Semdok"
+    }
+  }
+}

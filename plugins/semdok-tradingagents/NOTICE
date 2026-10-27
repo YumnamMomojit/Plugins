@@ -1,0 +1,9 @@
+semdok-tradingagents
+Copyright (c) 2026 Semdok
+
+This plugin installs and runs TradingAgents (https://github.com/TauricResearch/TradingAgents),
+Copyright Tauric Research, licensed under the Apache License, Version 2.0
+(https://www.apache.org/licenses/LICENSE-2.0). TradingAgents is downloaded from its
+repository at commit e8f5503e9b86d5c2710b0c76b1f686703968c9df during setup; it is not
+included in this package. TradingAgents' output is for research and education only and
+is not financial advice.
