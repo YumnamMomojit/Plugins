@@ -1,0 +1,31 @@
+# Keeps index.json and icons/ current: after every push that changes a plugin or market.json,
+# rebuilds them and commits the result. Pushes made with GITHUB_TOKEN start no new run.
+name: Update plugin market index
+
+on:
+  push:
+    branches: [main]
+    paths: ['plugins/**', 'market.json', 'scripts/build-index.mjs']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/build-index.mjs
+      - run: |
+          git add index.json icons
+          if git diff --cached --quiet; then echo "index unchanged"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update plugin market index"
+          git push

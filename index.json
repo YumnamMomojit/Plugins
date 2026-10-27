@@ -1,0 +1,42 @@
+{
+  "format": 1,
+  "title": {
+    "en": "Semdok Plugins"
+  },
+  "description": {
+    "en": "Plugins for Semdok Harness, made by Semdok."
+  },
+  "plugins": [
+    {
+      "name": "semdok-tradingagents",
+      "title": {
+        "en": "TradingAgents"
+      },
+      "description": {
+        "en": "Multi-agent stock and crypto research (TradingAgents by Tauric Research) on your Semdok models. Research only, not financial advice."
+      },
+      "author": "Semdok",
+      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-tradingagents#readme",
+      "repository": {
+        "url": "https://github.com/YumnamMomojit/Plugins",
+        "directory": "plugins/semdok-tradingagents"
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793104325,
+          "engines": {
+            "dsh": ">=1.0.0 <2.0.0"
+          },
+          "source": {
+            "type": "git",
+            "url": "https://github.com/YumnamMomojit/Plugins",
+            "commit": "7f06c530d573ac727214a1ea45ed319d29c7c108",
+            "path": "plugins/semdok-tradingagents"
+          }
+        }
+      ],
+      "icon": "icons/semdok-tradingagents.svg"
+    }
+  ]
+}
