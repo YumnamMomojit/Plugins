@@ -8,6 +8,37 @@
   },
   "plugins": [
     {
+      "name": "semdok-live",
+      "title": {
+        "en": "Sem Live Assistant"
+      },
+      "description": {
+        "en": "Add Sem, Semdok's 3D conversational assistant (live.semdok.com), to any website: HTML, React, Next.js, WordPress, Shopify, Wix, Webflow."
+      },
+      "author": "Semdok",
+      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-live#readme",
+      "repository": {
+        "url": "https://github.com/YumnamMomojit/Plugins",
+        "directory": "plugins/semdok-live"
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793387661,
+          "engines": {
+            "dsh": ">=1.0.0 <2.0.0"
+          },
+          "source": {
+            "type": "git",
+            "url": "https://github.com/YumnamMomojit/Plugins",
+            "commit": "c7eed28e32b35a74ee060cb34b6797409330f631",
+            "path": "plugins/semdok-live"
+          }
+        }
+      ],
+      "icon": "icons/semdok-live.svg"
+    },
+    {
       "name": "semdok-tradingagents",
       "title": {
         "en": "TradingAgents"
