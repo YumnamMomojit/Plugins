@@ -1,0 +1,6 @@
+# Adds the Sem live widget tool and its skill.
+- insert:
+    - id: semdok-live
+      name: semdok-live
+      config:
+        widgetUrl: https://live.semdok.com/widget/sem-widget.js

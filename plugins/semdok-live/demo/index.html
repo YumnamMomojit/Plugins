@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apex Cloud - Hybrid edge-cloud for growing teams</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:#07131f;color:#e8eef6}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 48px}
+.logo{font-weight:800;font-size:22px;letter-spacing:.5px}.logo span{color:#38bdf8}
+nav a{color:#9fb3c8;margin-left:28px;text-decoration:none;font-weight:600}
+.hero{max-width:1100px;margin:60px auto 40px;padding:0 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+h1{font-size:52px;line-height:1.05;margin:0 0 18px}h1 em{font-style:normal;background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;color:transparent}
+p.lead{font-size:19px;color:#9fb3c8;line-height:1.6}
+.cta{display:flex;gap:14px;margin-top:26px}.btn{padding:14px 22px;border-radius:12px;font-weight:700;border:0;cursor:pointer;font-size:15px}
+.primary{background:#38bdf8;color:#04121e}.ghost{background:transparent;color:#e8eef6;border:1px solid #2a3c52}
+.card{background:linear-gradient(160deg,#0f2235,#0a1828);border:1px solid #1d3349;border-radius:20px;padding:26px}
+.stat{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1d3349}.stat:last-child{border:0}.stat b{color:#38bdf8}
+.features{max-width:1100px;margin:0 auto 80px;padding:0 48px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.features div{background:#0c1c2c;border:1px solid #1a2f44;border-radius:16px;padding:22px}.features h3{margin:0 0 8px}.features p{margin:0;color:#8aa0b6;line-height:1.5}
+</style></head>
+<body>
+<header><div class="logo">Apex<span>Cloud</span></div><nav><a href="#">Platform</a><a href="#">Pricing</a><a href="#">Docs</a><a href="#">Contact</a></nav></header>
+<section class="hero">
+  <div><h1>Hybrid edge-cloud <em>for growing teams</em></h1>
+  <p class="lead">Run workloads where they make sense: on-device, at the edge, or in the cloud. One console, one bill, zero lock-in.</p>
+  <div class="cta"><button class="btn primary" id="talk">Talk to us</button><button class="btn ghost">See pricing</button></div></div>
+  <div class="card"><div class="stat"><span>Edge regions</span><b>42</b></div><div class="stat"><span>Median latency</span><b>18 ms</b></div><div class="stat"><span>Uptime (12 mo)</span><b>99.99%</b></div><div class="stat"><span>Teams onboard</span><b>3,200+</b></div></div>
+</section>
+<section class="features">
+  <div><h3>Edge first</h3><p>Deploy containers to 42 regions with one command and automatic failover.</p></div>
+  <div><h3>Cloud burst</h3><p>Overflow to the cloud only when traffic spikes, and pay by the second.</p></div>
+  <div><h3>One console</h3><p>Logs, metrics and costs for every node in a single dashboard.</p></div>
+</section>
+<!-- Sem live assistant: https://live.semdok.com -->
+<script
+  src="https://live.semdok.com/widget/sem-widget.js"
+  data-api-key="sem_pub_demo"
+  data-origin="https://live.semdok.com"
+  data-brand="Apex Cloud"
+  data-greeting="Hi! I'm the Apex Cloud assistant. Ask me about edge regions, pricing, or getting started."
+  data-avatar="female"
+  data-position="bottom-right"
+  data-trigger-label="Ask Apex"
+  defer>
+</script>
+<script>document.getElementById('talk').onclick = () => SemAssistant.open()</script>
+</body></html>

@@ -1,11 +1,15 @@
-# Keeps index.json and icons/ current: after every push that changes a plugin or market.json,
-# rebuilds them and commits the result. Pushes made with GITHUB_TOKEN start no new run.
+# Keeps index.json and icons/ current: after every push that changes a plugin or market.json, and
+# once a day for plugins in other repositories, rebuilds them and commits any change.
+# Pushes made with GITHUB_TOKEN start no new run.
 name: Update plugin market index
 
 on:
   push:
     branches: [main]
     paths: ['plugins/**', 'market.json', 'scripts/build-index.mjs']
+  # Picks up new commits in plugins that live in their own repositories.
+  schedule:
+    - cron: '17 3 * * *'
   workflow_dispatch:
 
 permissions:

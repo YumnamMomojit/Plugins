@@ -1,10 +1,27 @@
 {
-  "title": { "en": "Semdok Plugins" },
-  "description": { "en": "Plugins for Semdok Harness, made by Semdok." },
+  "title": {
+    "en": "Semdok Plugins"
+  },
+  "description": {
+    "en": "Plugins for Semdok Harness, made by Semdok."
+  },
   "plugins": {
     "semdok-tradingagents": {
-      "title": { "en": "TradingAgents" },
-      "description": { "en": "Multi-agent stock and crypto research (TradingAgents by Tauric Research) on your Semdok models. Research only, not financial advice." },
+      "title": {
+        "en": "TradingAgents"
+      },
+      "description": {
+        "en": "Multi-agent stock and crypto research (TradingAgents by Tauric Research) on your Semdok models. Research only, not financial advice."
+      },
+      "author": "Semdok"
+    },
+    "semdok-live": {
+      "title": {
+        "en": "Sem Live Assistant"
+      },
+      "description": {
+        "en": "Add Sem, Semdok's 3D conversational assistant (live.semdok.com), to any website: HTML, React, Next.js, WordPress, Shopify, Wix, Webflow."
+      },
       "author": "Semdok"
     }
   }
