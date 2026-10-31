@@ -8,6 +8,68 @@
   },
   "plugins": [
     {
+      "name": "semdok-agent-team",
+      "title": {
+        "en": "Agent Team"
+      },
+      "description": {
+        "en": "Orchestrator mode: a lead agent splits big tasks across specialist agents (researcher, builder, reviewer, tester, writer) that work in parallel, then checks and merges their results."
+      },
+      "author": "Semdok",
+      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-agent-team#readme",
+      "repository": {
+        "url": "https://github.com/YumnamMomojit/Plugins",
+        "directory": "plugins/semdok-agent-team"
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793421936,
+          "engines": {
+            "dsh": ">=1.0.0 <2.0.0"
+          },
+          "source": {
+            "type": "git",
+            "url": "https://github.com/YumnamMomojit/Plugins",
+            "commit": "2fd6774671975b076e74bfe85e6710b3bcbee107",
+            "path": "plugins/semdok-agent-team"
+          }
+        }
+      ],
+      "icon": "icons/semdok-agent-team.svg"
+    },
+    {
+      "name": "semdok-connectors",
+      "title": {
+        "en": "Semdok Connectors"
+      },
+      "description": {
+        "en": "BigQuery, Databricks and Gmail for the agent, through MCP servers: read-only BigQuery with a cost cap, Databricks Genie and SQL, Gmail read and drafts. Secrets never go through the chat."
+      },
+      "author": "Semdok",
+      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-connectors#readme",
+      "repository": {
+        "url": "https://github.com/YumnamMomojit/Plugins",
+        "directory": "plugins/semdok-connectors"
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793421936,
+          "engines": {
+            "dsh": ">=1.0.0 <2.0.0"
+          },
+          "source": {
+            "type": "git",
+            "url": "https://github.com/YumnamMomojit/Plugins",
+            "commit": "2fd6774671975b076e74bfe85e6710b3bcbee107",
+            "path": "plugins/semdok-connectors"
+          }
+        }
+      ],
+      "icon": "icons/semdok-connectors.svg"
+    },
+    {
       "name": "semdok-live",
       "title": {
         "en": "Sem Live Assistant"
