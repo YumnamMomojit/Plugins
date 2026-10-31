@@ -1,0 +1,22 @@
+# Adds the BigQuery, Databricks and Gmail connectors. Turn one on by asking the agent, for example
+# "connect BigQuery project my-analytics-123". The safety limits below are yours alone: the agent's
+# tools cannot change them. To change one, override this row's config in your profile's cordis.patch.yml.
+- insert:
+    - id: semdok-connectors
+      name: semdok-connectors
+      config:
+        bigquery:
+          # SELECT queries only.
+          readOnly: true
+          # The most one query may bill: 10 GiB scanned. A bigger query fails before it runs.
+          maximumBytesBilled: 10737418240
+          # Rows returned per query result.
+          maxQueryResultRows: 50
+        databricks:
+          # MCP servers to connect unless the user picks others: genie_one, sql, genie_space.
+          servers: [genie_one, sql]
+        gmail:
+          # Let the agent ask for permission to send email when you sign in. Drafts work either way.
+          allowSend: false
+          # When sending is allowed, send only to addresses you approved (gmail-mcp recipient pairing).
+          recipientPairing: false

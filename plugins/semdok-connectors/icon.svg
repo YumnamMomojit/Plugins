@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b6b4f"/>
+      <stop offset="1" stop-color="#033226"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8de8e"/>
+      <stop offset="1" stop-color="#c9922a"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <g stroke="#6ee7b7" stroke-width="3" stroke-linecap="round" opacity="0.85">
+    <line x1="64" y1="70" x2="34" y2="42"/>
+    <line x1="64" y1="70" x2="94" y2="42"/>
+    <line x1="64" y1="70" x2="64" y2="102"/>
+  </g>
+  <g fill="#0f2a22" stroke="#6ee7b7" stroke-width="3">
+    <circle cx="34" cy="42" r="17"/>
+    <circle cx="94" cy="42" r="17"/>
+    <circle cx="64" cy="102" r="17"/>
+  </g>
+  <g fill="none" stroke="#f8de8e" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="34" cy="36" rx="8" ry="3"/>
+    <path d="M26 36v12c0 1.7 3.6 3 8 3s8-1.3 8-3V36"/>
+    <path d="M26 42c0 1.7 3.6 3 8 3s8-1.3 8-3"/>
+    <path d="M85 43l9 4.5 9-4.5"/>
+    <path d="M85 48l9 4.5 9-4.5"/>
+    <rect x="55" y="95.5" width="18" height="13" rx="2"/>
+    <path d="M56 97l8 6 8-6"/>
+  </g>
+  <path d="M94 29l9 4.5-9 4.5-9-4.5z" fill="#f8de8e"/>
+  <circle cx="64" cy="70" r="11" fill="url(#gold)"/>
+  <circle cx="64" cy="70" r="4" fill="#0f2a22"/>
+  <path d="M64 6l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#f8de8e"/>
+</svg>

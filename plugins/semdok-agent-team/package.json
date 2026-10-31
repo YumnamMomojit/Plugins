@@ -1,0 +1,35 @@
+{
+  "name": "semdok-agent-team",
+  "version": "0.1.0",
+  "description": "Semdok Harness plugin: Orchestrator mode, a lead agent that splits big tasks across parallel specialist agents and merges their results",
+  "type": "module",
+  "files": [
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "semdok-harness",
+    "dsh-plugin",
+    "semdok",
+    "multi-agent",
+    "subagents",
+    "orchestrator"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=1.0.0 <2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YumnamMomojit/Plugins.git",
+    "directory": "plugins/semdok-agent-team"
+  },
+  "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-agent-team#readme"
+}

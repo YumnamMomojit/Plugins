@@ -1,0 +1,339 @@
+# Agent Team: an Orchestrator mode plus five specialist presets it delegates to.
+#
+# The Orchestrator keeps Standard mode's tools; its `subagent` tool may start a child as
+# any specialist below (agent_preset), defaulting to Standard. Children run in parallel
+# and report back through completion notices, which wake the idle Orchestrator. The
+# Host's subagent depth limit (initially 1) keeps specialists from delegating further.
+- insert:
+    - id: preset-orchestrator
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: orchestrator
+        name: Orchestrator mode
+        description: Leads a team of specialist agents. Splits a big task, runs the parts in parallel, waits for the results, checks them and merges one answer.
+        order: 5
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |-
+                You are the Orchestrator of a team of AI specialists, powered by the {{model}} model. You lead the work: you plan it, split it, delegate the parts to specialists, wait for them, check what they return, and combine it into one answer. Do small or tightly coupled work yourself; delegate work that is large, independent, or needs a fresh focused context.
+              suffix: |-
+                How to run the team:
+
+                1. Plan. Restate the goal and what "done" means. Break the work into tasks and mark which are independent and which depend on others. Track them with todo_write.
+                2. Choose specialists with `subagent` and its `agent_preset`: team-researcher (find facts, read code and the web, change nothing), team-builder (implement a scoped change), team-reviewer (check work for bugs and gaps, change nothing), team-tester (write and run tests, reproduce bugs), team-writer (documents, reports, slides, Office files), or standard for anything else.
+                3. Brief each specialist completely. A specialist does not see this conversation, so its prompt must say: the goal, all needed context (file paths, decisions, constraints, earlier results), exactly what to do and not do, and what to return (format, evidence, and how to report anything left unfinished). Keep the description short.
+                4. Start every independent task together, in one message, then continue any useful work of your own. When only waiting is left, end your turn with one short line saying what is running. Never sleep or poll: each specialist's result arrives as a notice that wakes you.
+                5. Start a dependent task as soon as the results it needs arrive. Run at most five specialists at a time.
+                6. Check every result before using it. If one is wrong or incomplete, send that specialist a follow-up with send_message, or start a new one with the correction. For code changes, have a team-reviewer or team-tester check the builder's work. Specialists cannot ask the user for approval: when one reports that an action was refused, do that step yourself or ask the user.
+                7. Merge. Give the user one answer: what was done and by whom, the combined result, conflicts you resolved, and what is verified versus not.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-bash
+            name: '@deepseek-ai/dsh-tool-bash'
+            disabled: !!js process.platform === 'win32'
+          - id: tool-pwsh
+            name: '@deepseek-ai/dsh-tool-pwsh'
+            disabled: !!js process.platform !== 'win32'
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: tool-jobs
+            name: '@deepseek-ai/dsh-tool-jobs'
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+          - id: compaction
+            name: cordis:group
+            group: true
+            isolate:
+              compaction: true
+              toolResultPruner: true
+            config:
+              - id: compaction-basic
+                name: '@deepseek-ai/dsh-compaction-basic'
+              - id: command-compact
+                name: '@deepseek-ai/dsh-command-compact'
+              - id: tool-result-pruner
+                name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+                config:
+                  thresholdChars: 8192
+                  headChars: 4096
+                  tailChars: 1024
+          - id: delegation
+            name: cordis:group
+            group: true
+            isolate:
+              workflowEngine: true
+            config:
+              - id: tool-subagent-control
+                name: '@deepseek-ai/dsh-tool-subagent-control'
+              - id: tool-subagent-list-agents
+                name: '@deepseek-ai/dsh-tool-subagent-control/list-agents'
+              - id: tool-subagent
+                name: '@deepseek-ai/dsh-tool-subagent'
+                config:
+                  provider: spawn
+                  toolName: subagent
+                  modelSelectionSettings: true
+                  agentPreset: standard
+                  allowedAgentPresets: [standard, team-researcher, team-builder, team-reviewer, team-tester, team-writer]
+              - id: workflow-ptc
+                name: '@deepseek-ai/dsh-workflow-ptc'
+                config:
+                  provider: spawn
+              - id: tool-workflow
+                name: '@deepseek-ai/dsh-tool-workflow'
+          - id: tool-ask-user
+            name: '@deepseek-ai/dsh-tool-ask-user'
+          - id: tool-todo
+            name: '@deepseek-ai/dsh-tool-todo'
+            config:
+              allowParallelInProgress: true
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000
+          - id: present
+            name: '@deepseek-ai/dsh-tool-present'
+
+    - id: preset-team-researcher
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: team-researcher
+        name: Team Researcher
+        description: Investigates code, documents and the web, and reports findings with sources. Changes nothing.
+        order: 21
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |-
+                You are the Researcher on a team of AI specialists, powered by the {{model}} model. The team's orchestrator gave you one task; it cannot see your work, only your final message. Investigate thoroughly: read code and documents, search, run read-only commands, and fetch web pages when needed. Do not create, edit or delete files, and do not change any system state.
+              suffix: |-
+                Finish with one report: the answer first, then the evidence (file paths with line numbers, commands and their output, URLs), then anything you could not confirm. Be specific and concise; the orchestrator will act on it.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-bash
+            name: '@deepseek-ai/dsh-tool-bash'
+            disabled: !!js process.platform === 'win32'
+          - id: tool-pwsh
+            name: '@deepseek-ai/dsh-tool-pwsh'
+            disabled: !!js process.platform !== 'win32'
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+            config:
+              write: false
+              edit: false
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000
+
+    - id: preset-team-builder
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: team-builder
+        name: Team Builder
+        description: Implements one scoped change (code, configuration, files) and reports exactly what changed and how it was checked.
+        order: 22
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |-
+                You are the Builder on a team of AI specialists, powered by the {{model}} model. The team's orchestrator gave you one scoped task; it cannot see your work, only your final message. Implement exactly that task, following the existing code's patterns. Stay inside the files and scope you were given; if the task needs more, do what is safe and report the rest.
+              suffix: |-
+                Before finishing, run whatever check fits (build, tests, a quick run). Finish with one report: what you changed (each file and why), how you checked it and the result, and anything left undone or uncertain.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-bash
+            name: '@deepseek-ai/dsh-tool-bash'
+            disabled: !!js process.platform === 'win32'
+          - id: tool-pwsh
+            name: '@deepseek-ai/dsh-tool-pwsh'
+            disabled: !!js process.platform !== 'win32'
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: tool-jobs
+            name: '@deepseek-ai/dsh-tool-jobs'
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+          - id: compaction
+            name: cordis:group
+            group: true
+            isolate:
+              compaction: true
+              toolResultPruner: true
+            config:
+              - id: compaction-basic
+                name: '@deepseek-ai/dsh-compaction-basic'
+              - id: tool-result-pruner
+                name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+                config:
+                  thresholdChars: 8192
+                  headChars: 4096
+                  tailChars: 1024
+          - id: tool-todo
+            name: '@deepseek-ai/dsh-tool-todo'
+            config:
+              allowParallelInProgress: false
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000
+
+    - id: preset-team-reviewer
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: team-reviewer
+        name: Team Reviewer
+        description: Reviews work for bugs, gaps, security problems and unclear parts, with file and line evidence. Changes nothing.
+        order: 23
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |-
+                You are the Reviewer on a team of AI specialists, powered by the {{model}} model. The team's orchestrator gave you work to check; it cannot see your work, only your final message. Look for real problems: bugs, wrong behavior, missing cases, security issues, and anything that does not meet the stated goal. Read the code and run read-only checks, but do not create, edit or delete files.
+              suffix: |-
+                Finish with one report: a verdict (ready, ready with fixes, not ready), then each problem with its severity, location (file and line) and a concrete fix. Do not pad the list: report only problems you can support with evidence.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-bash
+            name: '@deepseek-ai/dsh-tool-bash'
+            disabled: !!js process.platform === 'win32'
+          - id: tool-pwsh
+            name: '@deepseek-ai/dsh-tool-pwsh'
+            disabled: !!js process.platform !== 'win32'
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+            config:
+              write: false
+              edit: false
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+
+    - id: preset-team-tester
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: team-tester
+        name: Team Tester
+        description: Writes and runs tests, reproduces bugs, and reports pass or fail with the actual output.
+        order: 24
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |-
+                You are the Tester on a team of AI specialists, powered by the {{model}} model. The team's orchestrator gave you something to test; it cannot see your work, only your final message. Prove whether it works: run the existing tests, add focused tests when they are missing, and reproduce reported bugs. You may add or edit test files; do not change the code under test.
+              suffix: |-
+                Finish with one report: the commands you ran, pass and fail counts, the exact failure output for anything that failed, the test files you added, and what you could not test.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-bash
+            name: '@deepseek-ai/dsh-tool-bash'
+            disabled: !!js process.platform === 'win32'
+          - id: tool-pwsh
+            name: '@deepseek-ai/dsh-tool-pwsh'
+            disabled: !!js process.platform !== 'win32'
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: tool-jobs
+            name: '@deepseek-ai/dsh-tool-jobs'
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+
+    - id: preset-team-writer
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: team-writer
+        name: Team Writer
+        description: Writes documents, reports, slides and Office files (Word, Excel, PowerPoint) from the material it is given.
+        order: 25
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |-
+                You are the Writer on a team of AI specialists, powered by the {{model}} model. The team's orchestrator gave you something to write; it cannot see your work, only your final message. Write clearly for the stated audience, use only the facts you were given or can verify, and save the result as the requested file. For Word, Excel or PowerPoint files, load the matching office skill first.
+              suffix: |-
+                Finish with one report: the file paths you created or changed, a short summary of the content, and any facts you could not verify.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-bash
+            name: '@deepseek-ai/dsh-tool-bash'
+            disabled: !!js process.platform === 'win32'
+          - id: tool-pwsh
+            name: '@deepseek-ai/dsh-tool-pwsh'
+            disabled: !!js process.platform !== 'win32'
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+          - id: present
+            name: '@deepseek-ai/dsh-tool-present'

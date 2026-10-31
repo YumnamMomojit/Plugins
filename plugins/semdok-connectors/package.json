@@ -1,0 +1,46 @@
+{
+  "name": "semdok-connectors",
+  "version": "0.1.0",
+  "description": "Semdok Harness plugin: BigQuery, Databricks and Gmail connectors for the agent, through MCP servers with safe defaults",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "servers.js",
+    "skill.md",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "semdok-harness",
+    "dsh-plugin",
+    "semdok",
+    "mcp",
+    "bigquery",
+    "databricks",
+    "gmail",
+    "connectors"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=1.0.0 <2.0.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "*",
+    "@deepseek-ai/dsh-home-paths": "*",
+    "@deepseek-ai/dsh-mcp-client": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YumnamMomojit/Plugins.git",
+    "directory": "plugins/semdok-connectors"
+  },
+  "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-connectors#readme"
+}

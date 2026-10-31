@@ -6,6 +6,24 @@
     "en": "Plugins for Semdok Harness, made by Semdok."
   },
   "plugins": {
+    "semdok-agent-team": {
+      "title": {
+        "en": "Agent Team"
+      },
+      "description": {
+        "en": "Orchestrator mode: a lead agent splits big tasks across specialist agents (researcher, builder, reviewer, tester, writer) that work in parallel, then checks and merges their results."
+      },
+      "author": "Semdok"
+    },
+    "semdok-connectors": {
+      "title": {
+        "en": "Semdok Connectors"
+      },
+      "description": {
+        "en": "BigQuery, Databricks and Gmail for the agent, through MCP servers: read-only BigQuery with a cost cap, Databricks Genie and SQL, Gmail read and drafts. Secrets never go through the chat."
+      },
+      "author": "Semdok"
+    },
     "semdok-tradingagents": {
       "title": {
         "en": "TradingAgents"
