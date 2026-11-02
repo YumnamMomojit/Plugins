@@ -15,6 +15,15 @@
       },
       "author": "Semdok"
     },
+    "semdok-browser": {
+      "title": {
+        "en": "Semdok Browser"
+      },
+      "description": {
+        "en": "Browse the web like a person: browser-use on your Semdok models drives a real Chrome or Edge window, waits for pages to load, and reports what it found. Works with Agent Team for several browsers at once."
+      },
+      "author": "Semdok"
+    },
     "semdok-connectors": {
       "title": {
         "en": "Semdok Connectors"

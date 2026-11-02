@@ -22,7 +22,7 @@
                 How to run the team:
 
                 1. Plan. Restate the goal and what "done" means. Break the work into tasks and mark which are independent and which depend on others. Track them with todo_write.
-                2. Choose specialists with `subagent` and its `agent_preset`: team-researcher (find facts, read code and the web, change nothing), team-builder (implement a scoped change), team-reviewer (check work for bugs and gaps, change nothing), team-tester (write and run tests, reproduce bugs), team-writer (documents, reports, slides, Office files), or standard for anything else.
+                2. Choose specialists with `subagent` and its `agent_preset`: team-researcher (find facts, read code and the web, change nothing), team-builder (implement a scoped change), team-reviewer (check work for bugs and gaps, change nothing), team-tester (write and run tests, reproduce bugs), team-writer (documents, reports, slides, Office files), team-browser (use websites like a person through a real browser: prices, availability, multi-step pages; needs the Semdok Browser plugin; give each browser specialist one site or one question so several can run at once), or standard for anything else.
                 3. Brief each specialist completely. A specialist does not see this conversation, so its prompt must say: the goal, all needed context (file paths, decisions, constraints, earlier results), exactly what to do and not do, and what to return (format, evidence, and how to report anything left unfinished). Keep the description short.
                 4. Start every independent task together, in one message, then continue any useful work of your own. When only waiting is left, end your turn with one short line saying what is running. Never sleep or poll: each specialist's result arrives as a notice that wakes you.
                 5. Start a dependent task as soon as the results it needs arrive. Run at most five specialists at a time.
@@ -86,7 +86,7 @@
                   toolName: subagent
                   modelSelectionSettings: true
                   agentPreset: standard
-                  allowedAgentPresets: [standard, team-researcher, team-builder, team-reviewer, team-tester, team-writer]
+                  allowedAgentPresets: [standard, team-researcher, team-builder, team-reviewer, team-tester, team-writer, team-browser]
               - id: workflow-ptc
                 name: '@deepseek-ai/dsh-workflow-ptc'
                 config:
@@ -337,3 +337,34 @@
             name: '@deepseek-ai/dsh-tool-skill'
           - id: present
             name: '@deepseek-ai/dsh-tool-present'
+
+    - id: preset-team-browser
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: team-browser
+        name: Team Browser
+        description: Uses websites like a person through a real browser (the Semdok Browser plugin) and reports what it found, with page addresses. Changes nothing on your computer.
+        order: 26
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |-
+                You are the Browser specialist on a team of AI specialists, powered by the {{model}} model. The team's orchestrator gave you one web task; it cannot see your work, only your final message. Do it with the browser_task tool, which drives a real browser like a person and waits for pages to load. Load the semdok-browser skill first. Split a big task into a few focused browser_task calls (one site or one question each). Use web_fetch only for plain pages that need no clicking. Do not create, edit or delete files. If browser_task is not available, say that the Semdok Browser plugin must be installed and stop.
+              suffix: |-
+                Finish with one report: the answer first, then each fact with the page address it came from, then what you could not find or where you were blocked (logins, CAPTCHAs, steps that need the user). Never invent prices or facts you did not see.
+          - id: agent-instructions
+            name: '@deepseek-ai/dsh-agent-instructions'
+            config:
+              maxBytes: 65536
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: skill-filesystem
+            name: '@deepseek-ai/dsh-skill-filesystem'
+          - id: tool-skill
+            name: '@deepseek-ai/dsh-tool-skill'
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000

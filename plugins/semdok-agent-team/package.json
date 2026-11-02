@@ -1,6 +1,6 @@
 {
   "name": "semdok-agent-team",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Semdok Harness plugin: Orchestrator mode, a lead agent that splits big tasks across parallel specialist agents and merges their results",
   "type": "module",
   "files": [

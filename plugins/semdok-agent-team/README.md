@@ -49,6 +49,7 @@ spinner while any of them is still working.
 | Team Reviewer | Finds bugs, gaps and security problems, with file and line | No |
 | Team Tester | Runs and writes tests, reproduces bugs | Test files only |
 | Team Writer | Documents, reports, slides, Word, Excel and PowerPoint files | Yes |
+| Team Browser | Uses websites like a person in a real browser; needs the **Semdok Browser** plugin | No |
 | Standard | Anything else (the default when no specialist is chosen) | Yes |
 
 Researcher and Reviewer have no file-writing tools. Specialists work inside the session's permission mode (for

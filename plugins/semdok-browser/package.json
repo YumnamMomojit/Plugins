@@ -1,0 +1,44 @@
+{
+  "name": "semdok-browser",
+  "version": "0.1.0",
+  "description": "Semdok Harness plugin: browse the web like a person with browser-use on your Semdok models, in a real Chrome or Edge window",
+  "type": "module",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "skill.md",
+    "runner/bu_runner.py",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "semdok-harness",
+    "dsh-plugin",
+    "semdok",
+    "browser-use",
+    "browser",
+    "web-agent"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "dsh": ">=1.0.0 <2.0.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": "*",
+    "@deepseek-ai/dsh-home-paths": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YumnamMomojit/Plugins.git",
+    "directory": "plugins/semdok-browser"
+  },
+  "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-browser#readme"
+}

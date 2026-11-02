@@ -1,0 +1,17 @@
+# Adds the browser_task tool (browser-use on the Semdok models). Change the model, pace or browser here, or
+# override this row in your profile's cordis.patch.yml.
+- insert:
+    - id: semdok-browser
+      name: semdok-browser
+      config:
+        baseURL: https://console.semdok.com/v1
+        apiKeyEnv: SEMDOK_API_KEY
+        # A model that can read screenshots works best.
+        model: claude/claude-sonnet-4-5-20250929
+        # fast, human (waits for each page to load and pauses like a person) or patient.
+        pace: human
+        # Show the browser window so you can watch it work.
+        showBrowser: true
+        maxSteps: 25
+        # Leave empty to use Google Chrome or Microsoft Edge automatically.
+        browserPath: ''
