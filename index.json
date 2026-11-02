@@ -23,20 +23,51 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1793421936,
+          "version": "0.2.0",
+          "publishTimestamp": 1793607468,
           "engines": {
             "dsh": ">=1.0.0 <2.0.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/YumnamMomojit/Plugins",
-            "commit": "2fd6774671975b076e74bfe85e6710b3bcbee107",
+            "commit": "0d7bbb1c06491a2c45c95fc6a4ab0de695c3809c",
             "path": "plugins/semdok-agent-team"
           }
         }
       ],
       "icon": "icons/semdok-agent-team.svg"
+    },
+    {
+      "name": "semdok-browser",
+      "title": {
+        "en": "Semdok Browser"
+      },
+      "description": {
+        "en": "Browse the web like a person: browser-use on your Semdok models drives a real Chrome or Edge window, waits for pages to load, and reports what it found. Works with Agent Team for several browsers at once."
+      },
+      "author": "Semdok",
+      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-browser#readme",
+      "repository": {
+        "url": "https://github.com/YumnamMomojit/Plugins",
+        "directory": "plugins/semdok-browser"
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793607468,
+          "engines": {
+            "dsh": ">=1.0.0 <2.0.0"
+          },
+          "source": {
+            "type": "git",
+            "url": "https://github.com/YumnamMomojit/Plugins",
+            "commit": "0d7bbb1c06491a2c45c95fc6a4ab0de695c3809c",
+            "path": "plugins/semdok-browser"
+          }
+        }
+      ],
+      "icon": "icons/semdok-browser.svg"
     },
     {
       "name": "semdok-connectors",
