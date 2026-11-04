@@ -18,6 +18,35 @@ export const SERVERS = {
   bigquery: { package: '@toolbox-sdk/server', version: '1.15.0', size: 'about 280 MB' },
   // Gmail MCP server with scope-gated tools; most of its size is Google's API client library.
   gmail: { package: '@klodr/gmail-mcp', version: '3.0.0', size: 'about 250 MB' },
+  // Notion's own MCP server; Notion's hosted server needs an OAuth sign-in, this one takes an integration token.
+  notion: { package: '@notionhq/notion-mcp-server', version: '2.6.1', size: 'about 30 MB' },
+}
+
+/**
+ * Connectors that need only a key or token the user saves once in the app's private credential store (Skills Hub →
+ * Explore, or the "refs:" list of .credentials.yaml). Each turns on by itself when its key is there.
+ */
+export const KEYED = {
+  stripe: {
+    label: 'Stripe', ref: 'STRIPE_API_KEY', serverName: 'stripe', url: 'https://mcp.stripe.com',
+    keyHelp: 'a restricted key from the Stripe Dashboard → Developers → API keys (start with a test-mode key; grant only the access the agent needs)',
+  },
+  github: {
+    label: 'GitHub', ref: 'GITHUB_TOKEN', serverName: 'github', url: 'https://api.githubcopilot.com/mcp/',
+    keyHelp: 'a fine-grained personal access token from GitHub → Settings → Developer settings, limited to the repositories the agent may use',
+  },
+  supabase: {
+    label: 'Supabase', ref: 'SUPABASE_ACCESS_TOKEN', serverName: 'supabase', url: 'https://mcp.supabase.com/mcp?read_only=true',
+    keyHelp: 'a personal access token from the Supabase Dashboard → Account → Access Tokens (the connector is read-only)',
+  },
+  linear: {
+    label: 'Linear', ref: 'LINEAR_API_KEY', serverName: 'linear', url: 'https://mcp.linear.app/mcp',
+    keyHelp: 'a personal API key from Linear → Settings → Security & access → Personal API keys',
+  },
+  notion: {
+    label: 'Notion', ref: 'NOTION_TOKEN', serverName: 'notion', server: 'notion',
+    keyHelp: 'an internal integration secret from notion.so/profile/integrations; then share the pages the agent may use with that integration',
+  },
 }
 
 /**
@@ -128,6 +157,11 @@ export function googleCredentials() {
     || (WINDOWS ? join(process.env.APPDATA || join(homedir(), 'AppData', 'Roaming'), 'gcloud') : join(homedir(), '.config', 'gcloud'))
   const file = join(config, 'application_default_credentials.json')
   return existsSync(file) ? { source: `your gcloud application-default sign-in (${file})` } : undefined
+}
+
+/** The Notion server's entry script. */
+export function notionEntry(dataDir) {
+  return join(serverDir(dataDir, 'notion'), 'node_modules', '@notionhq', 'notion-mcp-server', 'bin', 'cli.mjs')
 }
 
 /** The Gmail server's entry script. */

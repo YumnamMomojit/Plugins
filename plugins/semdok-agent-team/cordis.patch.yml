@@ -1,4 +1,4 @@
-# Agent Team: an Orchestrator mode plus five specialist presets it delegates to.
+# Agent Team: a Team mode plus five specialist presets it delegates to.
 #
 # The Orchestrator keeps Standard mode's tools; its `subagent` tool may start a child as
 # any specialist below (agent_preset), defaulting to Standard. Children run in parallel
@@ -9,7 +9,7 @@
       name: '@deepseek-ai/dsh-agent-preset'
       config:
         id: orchestrator
-        name: Orchestrator mode
+        name: Team mode
         description: Leads a team of specialist agents. Splits a big task, runs the parts in parallel, waits for the results, checks them and merges one answer.
         order: 5
         plugins:

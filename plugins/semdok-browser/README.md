@@ -9,9 +9,9 @@ page addresses.
 
 In Semdok Harness, either:
 
-- **Plugins → Discover**, with the Semdok Plugins market
+- **Skills Hub → Explore** (**Plugins → Discover** before 1.2), with the Semdok Plugins market
   (`https://raw.githubusercontent.com/YumnamMomojit/Plugins/main/index.json`), then **Install** on *Semdok Browser*; or
-- **Plugins → Add plugin**, and enter `github:YumnamMomojit/Plugins#main&path:/plugins/semdok-browser`.
+- **Skills Hub → Add skill pack** (**Plugins → Add plugin** before 1.2), and enter `github:YumnamMomojit/Plugins#main&path:/plugins/semdok-browser`.
 
 Then click **Enable now**. You need Google Chrome or Microsoft Edge (Edge comes with Windows). The first browsing task
 installs browser-use (about 300 MB, a few minutes, once).
@@ -28,7 +28,7 @@ The browser window opens so you can watch it work.
 
 ### Several browsers at once with Agent Team
 
-With the [Agent Team](../semdok-agent-team) plugin installed, choose **Orchestrator mode** and give it a bigger web
+With the [Agent Team](../semdok-agent-team) plugin installed, choose **Team mode** and give it a bigger web
 job, for example *"Compare the price of the iPhone 17 on Amazon, Flipkart and Croma."* The Orchestrator sends one
 **Team Browser** specialist per site. They browse at the same time, each in its own browser, and it merges their
 reports into one comparison.

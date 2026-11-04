@@ -1,6 +1,7 @@
 # Semdok Connectors: a Semdok Harness plugin
 
-Lets the Semdok Harness agent work with **BigQuery**, **Databricks** and **Gmail**. Each connector is an MCP server
+Lets the Semdok Harness agent work with **BigQuery**, **Databricks**, **Gmail**, **Stripe**, **GitHub**, **Supabase**,
+**Linear** and **Notion**. Each connector is an MCP server
 that the app's own MCP client connects, with safe limits set by you, not by the agent.
 
 | Connector | Server | Signs in with | Safe defaults |
@@ -8,6 +9,11 @@ that the app's own MCP client connects, with safe limits set by you, not by the 
 | BigQuery | Google's [MCP Toolbox for Databases](https://github.com/googleapis/mcp-toolbox) (`@toolbox-sdk/server` 1.15.0) | Your Google Cloud sign-in on this computer | Read-only (SELECT only), at most 10 GiB billed per query, 50 rows per result |
 | Databricks | Databricks' own hosted MCP servers: Genie One, Databricks SQL, and optionally one Genie Agent | A personal access token that you store privately | Your token's own permissions |
 | Gmail | [`@klodr/gmail-mcp`](https://github.com/klodr/gmail-mcp) 3.0.0 (MIT) | Your own Google OAuth client, in your browser | Read and draft only; sending turned off |
+| Stripe | Stripe's hosted MCP server (mcp.stripe.com) | A restricted key, saved in Skills Hub → Explore | Your key's own permissions; the agent asks before any payment action |
+| GitHub | GitHub's hosted MCP server (api.githubcopilot.com/mcp) | A fine-grained personal access token | Only the repositories your token allows |
+| Supabase | Supabase's hosted MCP server (mcp.supabase.com) | A personal access token | Read-only |
+| Linear | Linear's hosted MCP server (mcp.linear.app) | A personal API key | Your key's own permissions |
+| Notion | [`@notionhq/notion-mcp-server`](https://github.com/makenotion/notion-mcp-server) 2.6.1 (MIT) | An internal integration secret | Only the pages you share with the integration |
 
 A connector's server installs the first time you turn it on, at the pinned version above, so you never download a
 server you do not use (BigQuery about 270 MB, Gmail about 250 MB unpacked). Databricks needs no download.
@@ -16,11 +22,18 @@ server you do not use (BigQuery about 270 MB, Gmail about 250 MB unpacked). Data
 
 In Semdok Harness, either:
 
-- **Plugins → Discover**, with the Semdok Plugins market
+- **Skills Hub → Explore** (**Plugins → Discover** before 1.2), with the Semdok Plugins market
   (`https://raw.githubusercontent.com/YumnamMomojit/Plugins/main/index.json`), then **Install** on *Semdok Connectors*; or
-- **Plugins → Add plugin**, and enter `github:YumnamMomojit/Plugins#main&path:/plugins/semdok-connectors`.
+- **Skills Hub → Add skill pack** (**Plugins → Add plugin** before 1.2), and enter `github:YumnamMomojit/Plugins#main&path:/plugins/semdok-connectors`.
 
 Then click **Enable now**.
+
+## Connect Stripe, GitHub, Supabase, Linear or Notion
+
+In Semdok Harness 1.2, open **Skills Hub → Explore**, click **+** on the service, paste its key and click **Save and
+connect**. The key goes straight into the app's private credential store, never into the chat, and the connector
+connects by itself. On an older version, save the key under `refs:` in `~/.dsh/.credentials.yaml` as
+`STRIPE_API_KEY`, `GITHUB_TOKEN`, `SUPABASE_ACCESS_TOKEN`, `LINEAR_API_KEY` or `NOTION_TOKEN`.
 
 ## Set up by asking the agent
 

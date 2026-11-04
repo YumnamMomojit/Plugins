@@ -4,7 +4,7 @@ Plugins for [Semdok Harness](https://console.semdok.com).
 
 | Plugin | What it does |
 |---|---|
-| [Agent Team](plugins/semdok-agent-team) | Orchestrator mode: a lead agent runs a team of specialist agents in parallel and merges their results |
+| [Agent Team](plugins/semdok-agent-team) | Team mode: a lead agent runs a team of specialist agents in parallel and merges their results |
 | [Semdok Browser](plugins/semdok-browser) | Browse the web like a person with browser-use, in a real Chrome or Edge window |
 | [Design Review](https://github.com/Semdok/semdok-egm) | Brainstorm, draft and review design documents with Google's Elephant-Goldfish Model and fresh-context reviewer agents |
 | [Semdok Connectors](plugins/semdok-connectors) | BigQuery, Databricks and Gmail for the agent, with safe limits you control |
@@ -13,7 +13,7 @@ Plugins for [Semdok Harness](https://console.semdok.com).
 
 ## Install in Semdok Harness
 
-1. Open **Plugins → Discover → Add index source**.
+1. Open **Skills Hub → Explore → Add index source** (**Plugins → Discover** before 1.2).
 2. Paste the market link: `https://raw.githubusercontent.com/YumnamMomojit/Plugins/main/index.json`
 3. Open a plugin card and click **Install**.
 

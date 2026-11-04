@@ -11,9 +11,9 @@ just by asking the Semdok Harness agent.
 
 In Semdok Harness, either:
 
-- **Plugins → Discover**, with the Semdok Plugins market
+- **Skills Hub → Explore** (**Plugins → Discover** before 1.2), with the Semdok Plugins market
   (`https://raw.githubusercontent.com/YumnamMomojit/Plugins/main/index.json`), then **Install** on *Sem Live Assistant*; or
-- **Plugins → Add plugin**, and enter `github:YumnamMomojit/Plugins#main&path:/plugins/semdok-live`.
+- **Skills Hub → Add skill pack** (**Plugins → Add plugin** before 1.2), and enter `github:YumnamMomojit/Plugins#main&path:/plugins/semdok-live`.
 
 ## Use
 

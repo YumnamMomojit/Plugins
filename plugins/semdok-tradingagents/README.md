@@ -12,7 +12,7 @@ bear researchers debate, a trader proposes a plan, and a risk team and portfolio
 
 ## Install
 
-In Semdok Harness: **Plugins → Add plugin**, enter the path of this folder, and click **Install**.
+In Semdok Harness: **Skills Hub → Add skill pack** (**Plugins → Add plugin** before 1.2), enter the path of this folder, and click **Install**.
 
 The first analysis installs TradingAgents into a private Python environment under
 `~/.dsh/plugin-data/semdok-tradingagents` (about 3–4 minutes, and around 600 MB). On Windows on Arm that

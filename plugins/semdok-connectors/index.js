@@ -1,8 +1,9 @@
-// Semdok Harness plugin: BigQuery, Databricks and Gmail for the agent. Each connector is an MCP server that the
-// app's own MCP client connects: Google's MCP Toolbox for BigQuery, Databricks' hosted MCP servers, and
-// @klodr/gmail-mcp for Gmail. A server installs the first time its connector is turned on. Secrets never pass
-// through the model: Google sign-ins happen in the browser, and the Databricks token is read from the app's
-// private credential file, the environment, or the Databricks CLI's configuration.
+// Semdok Harness plugin: BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear and Notion for the agent. Each
+// connector is an MCP server that the app's own MCP client connects: Google's MCP Toolbox for BigQuery, Databricks'
+// hosted MCP servers, @klodr/gmail-mcp for Gmail, the hosted servers of Stripe, GitHub, Supabase and Linear, and
+// Notion's own server. A server installs the first time its connector is turned on. Secrets never pass through the
+// model: Google sign-ins happen in the browser, and keys and tokens are read from the app's private credential store
+// (where Skills Hub → Explore saves them), the environment, or the Databricks CLI's configuration.
 import { readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -10,16 +11,19 @@ import * as McpClient from '@deepseek-ai/dsh-mcp-client'
 import { resolveDshHome } from '@deepseek-ai/dsh-home-paths'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import {
-  DATABRICKS_SERVERS, SERVERS, appRuntime, databricksCliProfile, databricksOrigin, exists, gmailEntry, gmailFiles,
-  googleCredentials, installServer, installedVersion, readSettings, run, toolboxBinary, writeSettings,
+  DATABRICKS_SERVERS, KEYED, SERVERS, appRuntime, databricksCliProfile, databricksOrigin, exists, gmailEntry, gmailFiles,
+  googleCredentials, installServer, installedVersion, notionEntry, readSettings, run, toolboxBinary, writeSettings,
 } from './servers.js'
 
 export const name = 'semdok-connectors'
 export const inject = ['tools', 'credentials']
 
 const SKILL = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'skill.md'), 'utf8')
-const CONNECTORS = ['bigquery', 'databricks', 'gmail']
-const LABEL = { bigquery: 'BigQuery', databricks: 'Databricks', gmail: 'Gmail' }
+const CONNECTORS = ['bigquery', 'databricks', 'gmail', ...Object.keys(KEYED)]
+const LABEL = {
+  bigquery: 'BigQuery', databricks: 'Databricks', gmail: 'Gmail',
+  ...Object.fromEntries(Object.entries(KEYED).map(([key, item]) => [key, item.label])),
+}
 const STATE = {
   'off': 'off', 'needs-setup': 'needs setup', 'installing': 'installing its server', 'connecting': 'connecting',
   'connected': 'connected', 'error': 'not connected',
@@ -30,8 +34,9 @@ const SOURCE = {
 }
 const GIB = 1024 ** 3
 const RECONNECT = { enabled: true, initialDelayMs: 500, maxDelayMs: 30_000, maxAttempts: 10 }
-// Values that look like a secret: Databricks tokens, Google access tokens and API keys, private keys.
-const SECRET = /dapi[0-9a-f]{16,}|\bya29\.|\bAIza[0-9A-Za-z_-]{20,}|-----BEGIN|\bsk[-_][A-Za-z0-9_]{12,}/
+// Values that look like a secret: Databricks, Stripe, GitHub, Supabase, Linear and Notion tokens, Google access tokens
+// and API keys, private keys.
+const SECRET = /dapi[0-9a-f]{16,}|\bya29\.|\bAIza[0-9A-Za-z_-]{20,}|-----BEGIN|\b(sk|rk)[-_][A-Za-z0-9_]{12,}|\bgh[pousr]_[A-Za-z0-9]{20,}|\bgithub_pat_|\bsbp_[0-9a-f]{20,}|\blin_api_|\bntn_[A-Za-z0-9]{20,}|\bsecret_[A-Za-z0-9]{20,}/
 const GB = bytes => `${(bytes / GIB).toLocaleString('en-US', { maximumFractionDigits: 1 })} GiB`
 
 export function apply(ctx, config = {}) {
@@ -69,7 +74,8 @@ export function apply(ctx, config = {}) {
       try { fiber.dispose() } catch { /* already gone */ }
     }
     const settings = settingsOf(key)
-    if (!settings.enabled) return set(key, 'off', ['Turned off.'])
+    // A keyed connector is on unless the user turned it off; it still waits for its key.
+    if (KEYED[key] ? settings.enabled === false : !settings.enabled) return set(key, 'off', ['Turned off.'])
     try {
       const plan = await prepare(key, settings, signal)
       if (plan.setup) return set(key, 'needs-setup', plan.setup)
@@ -115,6 +121,7 @@ export function apply(ctx, config = {}) {
 
   /** What a connector needs to connect: its MCP servers, or the setup steps still missing. */
   async function prepare(key, settings, signal) {
+    if (KEYED[key]) return prepareKeyed(key, signal)
     if (key === 'bigquery') {
       if (!settings.project) {
         return { setup: ['Choose the Google Cloud project that runs and pays for the queries: ask me to connect BigQuery with its project ID.'] }
@@ -221,6 +228,48 @@ export function apply(ctx, config = {}) {
     }
   }
 
+  /** A keyed connector: its key from the credential store, then its hosted server or, for Notion, its own server. */
+  async function prepareKeyed(key, signal) {
+    const item = KEYED[key]
+    const resolved = await ctx.credentials.resolve(item.ref).catch(() => undefined)
+    if (!resolved?.value) {
+      return {
+        setup: [
+          `${item.label} needs ${item.keyHelp}.`,
+          `Never paste it into this chat. Add it in Skills Hub → Explore → ${item.label} (+ Add), or save the line "${item.ref}: <key>" `
+            + `under "refs:" in ${join(home, '.credentials.yaml')}. It connects by itself once saved.`,
+        ],
+      }
+    }
+    const notes = [`Key from ${item.ref} in ${SOURCE[resolved.source] ?? resolved.source}.`]
+    if (key === 'supabase') notes.push('Read-only: the agent can look at projects and run read-only SQL, not change anything.')
+    if (item.server) {
+      await ensureServer(item.server, signal)
+      const runtime = appRuntime(home)
+      if (!runtime) throw new Error('Semdok Harness\'s own Node.js runtime was not found.')
+      return {
+        notes,
+        servers: [{
+          label: item.label,
+          config: {
+            serverName: item.serverName, transport: 'stdio', command: runtime.node, args: [notionEntry(dataDir)],
+            env: { NOTION_TOKEN: resolved.value },
+          },
+        }],
+      }
+    }
+    return {
+      notes,
+      servers: [{
+        label: item.label,
+        config: {
+          serverName: item.serverName, transport: 'streamable-http', url: config[key]?.url ?? item.url,
+          headers: { Authorization: `Bearer ${resolved.value}` },
+        },
+      }],
+    }
+  }
+
   /** The Databricks token and where it came from: the credential store or environment first, then the CLI profile. */
   async function databricksToken(profile, cli) {
     const resolved = await ctx.credentials.resolve('DATABRICKS_TOKEN').catch(() => undefined)
@@ -263,14 +312,18 @@ export function apply(ctx, config = {}) {
       }
     }
     if (key === 'gmail' && /invalid_grant|expired|revoked|credentials/i.test(message)) hints.push('Ask me to sign in to Gmail again.')
+    if (KEYED[key] && /\b401\b|unauthori[sz]ed|invalid.*(token|key)|bad credentials/i.test(message)) {
+      hints.push(`${LABEL[key]} refused the key in ${KEYED[key].ref}: check that it is current, then save a new one in Skills Hub → Explore.`)
+    }
+    if (KEYED[key] && /\b403\b|forbidden|permission/i.test(message)) hints.push(`The ${LABEL[key]} key lacks a permission this needs.`)
     return [message.slice(0, 600), ...hints].join(' ')
   }
 
   ctx.tools.register(defineTool({
     name: 'connectors_status',
-    description: 'Show the BigQuery, Databricks and Gmail connectors: whether each is on and connected, its MCP tools, its safety '
-      + 'limits, and the next setup step. Pass retry: true after the user finished a setup step (a Google sign-in, a saved token) '
-      + 'to connect again.',
+    description: 'Show the connectors (BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear, Notion): whether each is on '
+      + 'and connected, its MCP tools, its safety limits, and the next setup step. Pass retry: true after the user finished a setup '
+      + 'step (a Google sign-in, a saved key) to connect again.',
     parameters: {
       retry: { type: 'boolean', description: 'Connect again every connector that needs setup or failed. Default false.' },
     },
@@ -290,8 +343,10 @@ export function apply(ctx, config = {}) {
   ctx.tools.register(defineTool({
     name: 'connectors_configure',
     description: 'Turn a connector on or off and set its non-secret settings, then connect it and report the result. BigQuery needs '
-      + 'the Google Cloud project ID; Databricks needs the workspace URL. The first time BigQuery or Gmail is turned on, its server '
-      + 'downloads once (a few hundred MB), which can take minutes. Never pass tokens, passwords or keys: the user stores secrets '
+      + 'the Google Cloud project ID; Databricks needs the workspace URL. Stripe, GitHub, Supabase, Linear and Notion turn on by '
+      + 'themselves once the user saved their key in Skills Hub → Explore; use enabled: false to turn one off. The first time '
+      + 'BigQuery, Gmail or Notion is turned on, its server downloads once, which can take minutes. Never pass tokens, passwords '
+      + 'or keys: the user stores secrets '
       + 'outside the chat, as the setup steps explain. Safety limits (read-only, cost cap, sending email) are not settable here.',
     parameters: {
       connector: { type: 'string', enum: CONNECTORS, required: true, description: 'Which connector.' },
@@ -400,8 +455,8 @@ export function apply(ctx, config = {}) {
     apply(child) {
       child.skills.register({
         name: 'semdok-connectors',
-        description: 'Use BigQuery, Databricks and Gmail through the Semdok Connectors plugin: setup, safe querying, and email rules.',
-        whenToUse: 'When the user wants to connect, query or use BigQuery, Databricks, Genie or Gmail, or asks what connectors exist.',
+        description: 'Use BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear and Notion through the Semdok Connectors plugin: setup, safe use, and email and payment rules.',
+        whenToUse: 'When the user wants to connect or use BigQuery, Databricks, Genie, Gmail, Stripe, GitHub, Supabase, Linear or Notion, or asks what connectors exist.',
         source: 'runtime',
         content: SKILL,
       })
@@ -411,10 +466,13 @@ export function apply(ctx, config = {}) {
   // A token saved in the app's credential file takes effect without a restart.
   ctx.on('credentials/reference-updated', (ref) => {
     if (String(ref) === 'DATABRICKS_TOKEN' && settingsOf('databricks').enabled) refresh('databricks').catch(() => {})
+    for (const [key, item] of Object.entries(KEYED)) {
+      if (String(ref) === item.ref && settingsOf(key).enabled !== false) refresh(key).catch(() => {})
+    }
   })
 
   // Connect what was turned on before, in the background: a first-time download must not hold up startup.
   for (const key of CONNECTORS) {
-    if (settingsOf(key).enabled) refresh(key).catch(() => {})
+    if (KEYED[key] ? settingsOf(key).enabled !== false : settingsOf(key).enabled) refresh(key).catch(() => {})
   }
 }

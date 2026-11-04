@@ -1,6 +1,6 @@
 # Agent Team: a Semdok Harness plugin
 
-Adds **Orchestrator mode**: a lead agent that splits a big task across a team of specialist agents. The
+Adds **Team mode**: a lead agent that splits a big task across a team of specialist agents. The
 specialists work **in parallel**, the lead **waits without polling**, checks what each one returns, and merges
 everything into one answer.
 
@@ -8,15 +8,15 @@ everything into one answer.
 
 In Semdok Harness, either:
 
-- **Plugins → Discover**, with the Semdok Plugins market
+- **Skills Hub → Explore** (**Plugins → Discover** before 1.2), with the Semdok Plugins market
   (`https://raw.githubusercontent.com/YumnamMomojit/Plugins/main/index.json`), then **Install** on *Agent Team*; or
-- **Plugins → Add plugin**, and enter `github:YumnamMomojit/Plugins#main&path:/plugins/semdok-agent-team`.
+- **Skills Hub → Add skill pack** (**Plugins → Add plugin** before 1.2), and enter `github:YumnamMomojit/Plugins#main&path:/plugins/semdok-agent-team`.
 
 Then click **Enable now**.
 
 ## Use
 
-Start a **New Session**, click the mode button (it shows **Standard mode**), choose **Orchestrator mode**, and give
+Start a **New Task**, click the mode button (it shows **Solo mode**), choose **Team mode**, and give
 it a big task, for example:
 
 - *Audit this repository: map the architecture, find the riskiest bugs, and check the test coverage.*
@@ -37,7 +37,7 @@ it a big task, for example:
 5. **Merge.** You get one answer: who did what, the combined result, conflicts it resolved, and what is verified
    versus not.
 
-While a team works, the session header shows **Orchestrator mode** and how many **subagents** it started, with a
+While a team works, the session header shows **Team mode** and how many **subagents** it started, with a
 spinner while any of them is still working.
 
 ## The team
@@ -67,7 +67,7 @@ the specialists use. A cheaper, faster model for specialists keeps a team's cost
 model you chose for the session.
 
 A team uses more tokens than a single agent, because every specialist is its own conversation. Use Orchestrator
-mode for big tasks with independent parts, and Standard mode for small ones.
+mode for big tasks with independent parts, and Solo mode for small ones.
 
 ## Customize
 
