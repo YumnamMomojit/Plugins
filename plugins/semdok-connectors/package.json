@@ -1,12 +1,13 @@
 {
   "name": "semdok-connectors",
-  "version": "0.2.0",
-  "description": "Semdok Harness plugin: BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear and Notion connectors for the agent, through MCP servers with safe defaults",
+  "version": "0.3.0",
+  "description": "Semdok Harness plugin: BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear, Notion and Vercel connectors for the agent, through MCP servers with safe defaults",
   "type": "module",
   "main": "index.js",
   "files": [
     "index.js",
     "servers.js",
+    "vercel.js",
     "skill.md",
     "cordis.patch.yml",
     "icon.svg",

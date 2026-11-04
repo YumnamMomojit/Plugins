@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url'
 import * as McpClient from '@deepseek-ai/dsh-mcp-client'
 import { resolveDshHome } from '@deepseek-ai/dsh-home-paths'
 import { defineTool } from '@deepseek-ai/dsh-tools'
+import { registerVercelTools, vercelApi } from './vercel.js'
 import {
   DATABRICKS_SERVERS, KEYED, SERVERS, appRuntime, databricksCliProfile, databricksOrigin, exists, gmailEntry, gmailFiles,
   googleCredentials, installServer, installedVersion, notionEntry, readSettings, run, toolboxBinary, writeSettings,
@@ -79,6 +80,7 @@ export function apply(ctx, config = {}) {
     try {
       const plan = await prepare(key, settings, signal)
       if (plan.setup) return set(key, 'needs-setup', plan.setup)
+      if (plan.native) return set(key, 'connected', plan.notes)
       set(key, 'connecting', ['Connecting…'])
       const lines = [...plan.notes ?? []]
       let connected = 0
@@ -242,6 +244,12 @@ export function apply(ctx, config = {}) {
       }
     }
     const notes = [`Key from ${item.ref} in ${SOURCE[resolved.source] ?? resolved.source}.`]
+    if (item.native) {
+      // Vercel: no MCP server; check the token, then the vercel_* tools use it.
+      const user = await vercelApi(resolved.value, '/v2/user', { base: config.vercel?.apiUrl, signal })
+      const name = user?.user?.username ?? user?.user?.email ?? 'your account'
+      return { native: true, notes: [...notes, `Signed in as ${name}. Tools: vercel_projects, vercel_deployments, vercel_deployment_logs, vercel_domains, vercel_env_names, vercel_teams (read-only).`] }
+    }
     if (key === 'supabase') notes.push('Read-only: the agent can look at projects and run read-only SQL, not change anything.')
     if (item.server) {
       await ensureServer(item.server, signal)
@@ -321,7 +329,7 @@ export function apply(ctx, config = {}) {
 
   ctx.tools.register(defineTool({
     name: 'connectors_status',
-    description: 'Show the connectors (BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear, Notion): whether each is on '
+    description: 'Show the connectors (BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear, Notion, Vercel): whether each is on '
       + 'and connected, its MCP tools, its safety limits, and the next setup step. Pass retry: true after the user finished a setup '
       + 'step (a Google sign-in, a saved key) to connect again.',
     parameters: {
@@ -343,7 +351,7 @@ export function apply(ctx, config = {}) {
   ctx.tools.register(defineTool({
     name: 'connectors_configure',
     description: 'Turn a connector on or off and set its non-secret settings, then connect it and report the result. BigQuery needs '
-      + 'the Google Cloud project ID; Databricks needs the workspace URL. Stripe, GitHub, Supabase, Linear and Notion turn on by '
+      + 'the Google Cloud project ID; Databricks needs the workspace URL. Stripe, GitHub, Supabase, Linear, Notion and Vercel turn on by '
       + 'themselves once the user saved their key in Skills Hub → Explore; use enabled: false to turn one off. The first time '
       + 'BigQuery, Gmail or Notion is turned on, its server downloads once, which can take minutes. Never pass tokens, passwords '
       + 'or keys: the user stores secrets '
@@ -448,6 +456,15 @@ export function apply(ctx, config = {}) {
       return { report: describe('gmail') }
     },
   }))
+
+  registerVercelTools(ctx, async () => {
+    const resolved = await ctx.credentials.resolve('VERCEL_TOKEN').catch(() => undefined)
+    if (!resolved?.value) {
+      throw new Error('Vercel is not connected. Ask the user to add a Vercel access token in Skills Hub → Explore → Vercel (+). '
+        + 'Never ask for the token in this chat.')
+    }
+    return resolved.value
+  }, config.vercel?.apiUrl)
 
   ctx.plugin({
     name: 'semdok-connectors-skill',

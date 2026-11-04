@@ -1,8 +1,8 @@
 # Semdok Connectors: a Semdok Harness plugin
 
 Lets the Semdok Harness agent work with **BigQuery**, **Databricks**, **Gmail**, **Stripe**, **GitHub**, **Supabase**,
-**Linear** and **Notion**. Each connector is an MCP server
-that the app's own MCP client connects, with safe limits set by you, not by the agent.
+**Linear**, **Notion** and **Vercel**. Each connector is an MCP server that the app's own MCP client
+connects (Vercel uses tools built into the plugin), with safe limits set by you, not by the agent.
 
 | Connector | Server | Signs in with | Safe defaults |
 |---|---|---|---|
@@ -13,6 +13,7 @@ that the app's own MCP client connects, with safe limits set by you, not by the 
 | GitHub | GitHub's hosted MCP server (api.githubcopilot.com/mcp) | A fine-grained personal access token | Only the repositories your token allows |
 | Supabase | Supabase's hosted MCP server (mcp.supabase.com) | A personal access token | Read-only |
 | Linear | Linear's hosted MCP server (mcp.linear.app) | A personal API key | Your key's own permissions |
+| Vercel | Vercel's REST API, built into this plugin (Vercel's hosted MCP server needs an OAuth sign-in) | An access token, saved in Skills Hub → Explore | Read-only: projects, deployments, build logs, domains, and environment variable names (never values) |
 | Notion | [`@notionhq/notion-mcp-server`](https://github.com/makenotion/notion-mcp-server) 2.6.1 (MIT) | An internal integration secret | Only the pages you share with the integration |
 
 A connector's server installs the first time you turn it on, at the pinned version above, so you never download a
@@ -28,12 +29,12 @@ In Semdok Harness, either:
 
 Then click **Enable now**.
 
-## Connect Stripe, GitHub, Supabase, Linear or Notion
+## Connect Stripe, GitHub, Supabase, Linear, Notion or Vercel
 
 In Semdok Harness 1.2, open **Skills Hub → Explore**, click **+** on the service, paste its key and click **Save and
 connect**. The key goes straight into the app's private credential store, never into the chat, and the connector
 connects by itself. On an older version, save the key under `refs:` in `~/.dsh/.credentials.yaml` as
-`STRIPE_API_KEY`, `GITHUB_TOKEN`, `SUPABASE_ACCESS_TOKEN`, `LINEAR_API_KEY` or `NOTION_TOKEN`.
+`STRIPE_API_KEY`, `GITHUB_TOKEN`, `SUPABASE_ACCESS_TOKEN`, `LINEAR_API_KEY`, `NOTION_TOKEN` or `VERCEL_TOKEN`.
 
 ## Set up by asking the agent
 

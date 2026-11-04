@@ -1,8 +1,10 @@
-# Semdok Connectors: BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear and Notion
+# Semdok Connectors: BigQuery, Databricks, Gmail, Stripe, GitHub, Supabase, Linear, Notion and Vercel
 
 The semdok-connectors plugin connects MCP servers. A connected connector's tools appear as `mcp__bigquery__…`,
 `mcp__databricks_genie__…`, `mcp__databricks_sql__…`, `mcp__databricks_space__…`, `mcp__gmail__…`, `mcp__stripe__…`,
-`mcp__github__…`, `mcp__supabase__…`, `mcp__linear__…` and `mcp__notion__…`.
+`mcp__github__…`, `mcp__supabase__…`, `mcp__linear__…` and `mcp__notion__…`. Vercel has its own read-only tools:
+`vercel_projects`, `vercel_deployments`, `vercel_deployment_logs` (why a build failed), `vercel_domains`,
+`vercel_env_names` (names only, never values) and `vercel_teams`.
 
 ## Setup
 
@@ -18,7 +20,7 @@ The semdok-connectors plugin connects MCP servers. A connected connector's tools
    - **Gmail** needs the user's own Google Cloud OAuth client file; then call `connectors_gmail_sign_in`, which opens
      Google's consent screen in the user's browser. Ask for sending (`allow_send`) only when the user explicitly
      wants the agent to send email.
-   - **Stripe, GitHub, Supabase, Linear and Notion** need only a key. The user adds it in **Skills Hub → Explore**
+   - **Stripe, GitHub, Supabase, Linear, Notion and Vercel** need only a key. The user adds it in **Skills Hub → Explore**
      (the + button on the service), which saves it privately; the connector then connects by itself. If one is not
      connected, call `connectors_status` and relay its setup step. Supabase is read-only.
 3. The first time BigQuery, Gmail or Notion is turned on, its server downloads once (a few hundred MB). Tell the user it
@@ -38,7 +40,7 @@ The semdok-connectors plugin connects MCP servers. A connected connector's tools
 
 Never ask the user to paste a token, password, key or OAuth client secret into the chat. Never read or print the
 files that hold them (`.credentials.yaml`, `~/.databrickscfg`, `~/.gmail-mcp/`, service-account key files). Keys for
-Stripe, GitHub, Supabase, Linear and Notion are added only in Skills Hub → Explore. If the
+Stripe, GitHub, Supabase, Linear, Notion and Vercel are added only in Skills Hub → Explore. If the
 user pastes a secret anyway, do not repeat it; tell them to revoke it and create a new one.
 
 ## BigQuery

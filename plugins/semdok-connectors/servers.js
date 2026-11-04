@@ -43,6 +43,10 @@ export const KEYED = {
     label: 'Linear', ref: 'LINEAR_API_KEY', serverName: 'linear', url: 'https://mcp.linear.app/mcp',
     keyHelp: 'a personal API key from Linear → Settings → Security & access → Personal API keys',
   },
+  vercel: {
+    label: 'Vercel', ref: 'VERCEL_TOKEN', native: true,
+    keyHelp: 'an access token from vercel.com/account/settings/tokens, scoped to the team the agent may read (the connector only reads)',
+  },
   notion: {
     label: 'Notion', ref: 'NOTION_TOKEN', serverName: 'notion', server: 'notion',
     keyHelp: 'an internal integration secret from notion.so/profile/integrations; then share the pages the agent may use with that integration',
