@@ -75,7 +75,7 @@
         "en": "Semdok Connectors"
       },
       "description": {
-        "en": "Apps and data for the agent through MCP: Stripe, GitHub, Supabase, Linear and Notion with one saved key, plus read-only BigQuery with a cost cap, Databricks Genie and SQL, and Gmail read and drafts. Secrets never go through the chat."
+        "en": "Apps and data for the agent through MCP: Stripe, GitHub, Supabase, Linear, Notion and Vercel with one saved key, plus read-only BigQuery with a cost cap, Databricks Genie and SQL, and Gmail read and drafts. Secrets never go through the chat."
       },
       "author": "Semdok",
       "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-connectors#readme",
@@ -85,15 +85,15 @@
       },
       "versions": [
         {
-          "version": "0.2.0",
-          "publishTimestamp": 1793776663,
+          "version": "0.3.0",
+          "publishTimestamp": 1793793330,
           "engines": {
             "dsh": ">=1.0.0 <2.0.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/YumnamMomojit/Plugins",
-            "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
+            "commit": "1bd192969c1f7cae1a755921efef77b5f572cd7d",
             "path": "plugins/semdok-connectors"
           }
         }
