@@ -33,6 +33,16 @@
       },
       "author": "Semdok"
     },
+    "semdok-egm": {
+      "title": {
+        "en": "Design Review"
+      },
+      "description": {
+        "en": "Plan features before coding with Google's Elephant-Goldfish Model: brainstorm, draft a design document, and have fresh-context reviewer agents find its gaps. Commands /egm-brainstorm, /egm-draft and /egm-review."
+      },
+      "author": "Semdok",
+      "repository": "https://github.com/Semdok/semdok-egm"
+    },
     "semdok-tradingagents": {
       "title": {
         "en": "TradingAgents"

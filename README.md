@@ -6,6 +6,7 @@ Plugins for [Semdok Harness](https://console.semdok.com).
 |---|---|
 | [Agent Team](plugins/semdok-agent-team) | Orchestrator mode: a lead agent runs a team of specialist agents in parallel and merges their results |
 | [Semdok Browser](plugins/semdok-browser) | Browse the web like a person with browser-use, in a real Chrome or Edge window |
+| [Design Review](https://github.com/Semdok/semdok-egm) | Brainstorm, draft and review design documents with Google's Elephant-Goldfish Model and fresh-context reviewer agents |
 | [Semdok Connectors](plugins/semdok-connectors) | BigQuery, Databricks and Gmail for the agent, with safe limits you control |
 | [Sem Live Assistant](plugins/semdok-live) | Add Sem, Semdok's 3D conversational assistant, to any website |
 | [TradingAgents](plugins/semdok-tradingagents) | Multi-agent stock and crypto research on your Semdok models (research only, not financial advice) |

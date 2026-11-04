@@ -101,6 +101,35 @@
       "icon": "icons/semdok-connectors.svg"
     },
     {
+      "name": "semdok-egm",
+      "title": {
+        "en": "Design Review"
+      },
+      "description": {
+        "en": "Plan features before coding with Google's Elephant-Goldfish Model: brainstorm, draft a design document, and have fresh-context reviewer agents find its gaps. Commands /egm-brainstorm, /egm-draft and /egm-review."
+      },
+      "author": "Semdok",
+      "homepage": "https://github.com/Semdok/semdok-egm#readme",
+      "repository": {
+        "url": "https://github.com/Semdok/semdok-egm"
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793694048,
+          "engines": {
+            "dsh": ">=1.0.0 <2.0.0"
+          },
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Semdok/semdok-egm",
+            "commit": "c6bfbd3d60f0623c5c246c73c1e7fd665042349f"
+          }
+        }
+      ],
+      "icon": "icons/semdok-egm.svg"
+    },
+    {
       "name": "semdok-live",
       "title": {
         "en": "Sem Live Assistant"
