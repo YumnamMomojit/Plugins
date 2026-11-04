@@ -13,7 +13,7 @@
         "en": "Agent Team"
       },
       "description": {
-        "en": "Orchestrator mode: a lead agent splits big tasks across specialist agents (researcher, builder, reviewer, tester, writer) that work in parallel, then checks and merges their results."
+        "en": "Team mode: a lead agent splits big tasks across specialist agents (researcher, builder, reviewer, tester, writer) that work in parallel, then checks and merges their results."
       },
       "author": "Semdok",
       "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-agent-team#readme",
@@ -23,15 +23,15 @@
       },
       "versions": [
         {
-          "version": "0.2.0",
-          "publishTimestamp": 1793607468,
+          "version": "0.2.1",
+          "publishTimestamp": 1793776663,
           "engines": {
             "dsh": ">=1.0.0 <2.0.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/YumnamMomojit/Plugins",
-            "commit": "0d7bbb1c06491a2c45c95fc6a4ab0de695c3809c",
+            "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-agent-team"
           }
         }
@@ -55,14 +55,14 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793607468,
+          "publishTimestamp": 1793776663,
           "engines": {
             "dsh": ">=1.0.0 <2.0.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/YumnamMomojit/Plugins",
-            "commit": "0d7bbb1c06491a2c45c95fc6a4ab0de695c3809c",
+            "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-browser"
           }
         }
@@ -75,7 +75,7 @@
         "en": "Semdok Connectors"
       },
       "description": {
-        "en": "BigQuery, Databricks and Gmail for the agent, through MCP servers: read-only BigQuery with a cost cap, Databricks Genie and SQL, Gmail read and drafts. Secrets never go through the chat."
+        "en": "Apps and data for the agent through MCP: Stripe, GitHub, Supabase, Linear and Notion with one saved key, plus read-only BigQuery with a cost cap, Databricks Genie and SQL, and Gmail read and drafts. Secrets never go through the chat."
       },
       "author": "Semdok",
       "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-connectors#readme",
@@ -85,15 +85,15 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1793421936,
+          "version": "0.2.0",
+          "publishTimestamp": 1793776663,
           "engines": {
             "dsh": ">=1.0.0 <2.0.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/YumnamMomojit/Plugins",
-            "commit": "2fd6774671975b076e74bfe85e6710b3bcbee107",
+            "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-connectors"
           }
         }
@@ -146,14 +146,14 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793387661,
+          "publishTimestamp": 1793776663,
           "engines": {
             "dsh": ">=1.0.0 <2.0.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/YumnamMomojit/Plugins",
-            "commit": "c7eed28e32b35a74ee060cb34b6797409330f631",
+            "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-live"
           }
         }
@@ -177,14 +177,14 @@
       "versions": [
         {
           "version": "0.1.0",
-          "publishTimestamp": 1793104325,
+          "publishTimestamp": 1793776663,
           "engines": {
             "dsh": ">=1.0.0 <2.0.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/YumnamMomojit/Plugins",
-            "commit": "7f06c530d573ac727214a1ea45ed319d29c7c108",
+            "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-tradingagents"
           }
         }
