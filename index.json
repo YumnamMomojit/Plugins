@@ -16,9 +16,9 @@
         "en": "Team mode: a lead agent splits big tasks across specialist agents (researcher, builder, reviewer, tester, writer) that work in parallel, then checks and merges their results."
       },
       "author": "Semdok",
-      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-agent-team#readme",
+      "homepage": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-agent-team#readme",
       "repository": {
-        "url": "https://github.com/YumnamMomojit/Plugins",
+        "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
         "directory": "plugins/semdok-agent-team"
       },
       "versions": [
@@ -30,7 +30,7 @@
           },
           "source": {
             "type": "git",
-            "url": "https://github.com/YumnamMomojit/Plugins",
+            "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
             "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-agent-team"
           }
@@ -47,9 +47,9 @@
         "en": "Browse the web like a person: browser-use on your Semdok models drives a real Chrome or Edge window, waits for pages to load, and reports what it found. Works with Agent Team for several browsers at once."
       },
       "author": "Semdok",
-      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-browser#readme",
+      "homepage": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-browser#readme",
       "repository": {
-        "url": "https://github.com/YumnamMomojit/Plugins",
+        "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
         "directory": "plugins/semdok-browser"
       },
       "versions": [
@@ -61,7 +61,7 @@
           },
           "source": {
             "type": "git",
-            "url": "https://github.com/YumnamMomojit/Plugins",
+            "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
             "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-browser"
           }
@@ -78,9 +78,9 @@
         "en": "Apps and data for the agent through MCP: Stripe, GitHub, Supabase, Linear and Notion with one saved key, plus read-only BigQuery with a cost cap, Databricks Genie and SQL, and Gmail read and drafts. Secrets never go through the chat."
       },
       "author": "Semdok",
-      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-connectors#readme",
+      "homepage": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-connectors#readme",
       "repository": {
-        "url": "https://github.com/YumnamMomojit/Plugins",
+        "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
         "directory": "plugins/semdok-connectors"
       },
       "versions": [
@@ -92,7 +92,7 @@
           },
           "source": {
             "type": "git",
-            "url": "https://github.com/YumnamMomojit/Plugins",
+            "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
             "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-connectors"
           }
@@ -115,15 +115,15 @@
       },
       "versions": [
         {
-          "version": "0.1.0",
-          "publishTimestamp": 1793694048,
+          "version": "0.1.1",
+          "publishTimestamp": 1793776678,
           "engines": {
             "dsh": ">=1.0.0 <2.0.0"
           },
           "source": {
             "type": "git",
             "url": "https://github.com/Semdok/semdok-egm",
-            "commit": "c6bfbd3d60f0623c5c246c73c1e7fd665042349f"
+            "commit": "78b17913551557627f18b78db26a8b3b2dd065e8"
           }
         }
       ],
@@ -138,9 +138,9 @@
         "en": "Add Sem, Semdok's 3D conversational assistant (live.semdok.com), to any website: HTML, React, Next.js, WordPress, Shopify, Wix, Webflow."
       },
       "author": "Semdok",
-      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-live#readme",
+      "homepage": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-live#readme",
       "repository": {
-        "url": "https://github.com/YumnamMomojit/Plugins",
+        "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
         "directory": "plugins/semdok-live"
       },
       "versions": [
@@ -152,7 +152,7 @@
           },
           "source": {
             "type": "git",
-            "url": "https://github.com/YumnamMomojit/Plugins",
+            "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
             "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-live"
           }
@@ -169,9 +169,9 @@
         "en": "Multi-agent stock and crypto research (TradingAgents by Tauric Research) on your Semdok models. Research only, not financial advice."
       },
       "author": "Semdok",
-      "homepage": "https://github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-tradingagents#readme",
+      "homepage": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins/tree/main/plugins/semdok-tradingagents#readme",
       "repository": {
-        "url": "https://github.com/YumnamMomojit/Plugins",
+        "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
         "directory": "plugins/semdok-tradingagents"
       },
       "versions": [
@@ -183,7 +183,7 @@
           },
           "source": {
             "type": "git",
-            "url": "https://github.com/YumnamMomojit/Plugins",
+            "url": "https://YumnamMomojit@github.com/YumnamMomojit/Plugins",
             "commit": "b9ce88124a0b233d36973a641494e354ee3ed5b4",
             "path": "plugins/semdok-tradingagents"
           }
